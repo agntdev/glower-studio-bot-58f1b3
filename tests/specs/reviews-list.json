@@ -3,17 +3,15 @@
     "name": "Read Reviews",
     "steps": [
       {
+        "send": { "callback": "reviews:list" },
         "expect": [
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Browse client reviews with photos and admin replies"
+              "text": "No reviews yet — be the first to leave one after your appointment."
             }
           }
-        ],
-        "send": {
-          "callback": "reviews:list"
-        }
+        ]
       }
     ]
   }

@@ -1,17 +1,31 @@
 import { Composer } from "grammy";
+import type { Ctx } from "../bot.js";
+import { registerMainMenuItem, inlineButton, inlineKeyboard } from "../toolkit/index.js";
+import { getStore } from "../toolkit/store.js";
 
-// SCAFFOLD — generated from the bot blueprint BEFORE the agent runs.
-// Keep a LIVE registration (.command / .callbackQuery / …) so this feature is
-// never an empty stub. Replace the reply body with real logic + copy; if you
-// change the user-facing text, update tests/specs to match EXACTLY.
-// Do NOT rewrite src/bot.ts — buildBot() already auto-loads this module.
-// Menu: wire this into /start via registerMainMenuItem({ label: "View Services", data: "services:list" }) if the toolkit exposes it.
+registerMainMenuItem({ label: "💅 Services", data: "services:list", order: 10 });
 
-const composer = new Composer();
+const composer = new Composer<Ctx>();
 
 composer.callbackQuery("services:list", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply("Browse available beauty services with photos and details");
+  const store = getStore();
+  const services = await store.getServices();
+
+  if (services.length === 0) {
+    await ctx.reply("No services available yet — check back soon.", {
+      reply_markup: inlineKeyboard([[inlineButton("⬅️ Back to menu", "menu:main")]]),
+    });
+    return;
+  }
+
+  const lines = services.map(
+    (s) => `• ${s.name} — $${s.price} (${s.duration} min)\n  ${s.description}`,
+  );
+
+  await ctx.reply(lines.join("\n\n"), {
+    reply_markup: inlineKeyboard([[inlineButton("⬅️ Back to menu", "menu:main")]]),
+  });
 });
 
 export default composer;

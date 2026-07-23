@@ -3,17 +3,15 @@
     "name": "Portfolio Gallery",
     "steps": [
       {
+        "send": { "callback": "portfolio:gallery" },
         "expect": [
           {
             "method": "sendMessage",
             "payload": {
-              "text": "View curated portfolio images with captions"
+              "text": "• Summer nail art collection — pastel ombré tips [nails, summer]\n\n• Bridal updo — classic elegance for your special day [hair, bridal]\n\n• Glow facial results — radiant, hydrated skin [facial, skincare]"
             }
           }
-        ],
-        "send": {
-          "callback": "portfolio:gallery"
-        }
+        ]
       }
     ]
   }
