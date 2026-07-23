@@ -1,17 +1,32 @@
 import { Composer } from "grammy";
+import type { Ctx } from "../bot.js";
+import { registerMainMenuItem, inlineButton, inlineKeyboard } from "../toolkit/index.js";
+import { getStore } from "../toolkit/store.js";
 
-// SCAFFOLD — generated from the bot blueprint BEFORE the agent runs.
-// Keep a LIVE registration (.command / .callbackQuery / …) so this feature is
-// never an empty stub. Replace the reply body with real logic + copy; if you
-// change the user-facing text, update tests/specs to match EXACTLY.
-// Do NOT rewrite src/bot.ts — buildBot() already auto-loads this module.
-// Menu: wire this into /start via registerMainMenuItem({ label: "Portfolio Gallery", data: "portfolio:gallery" }) if the toolkit exposes it.
+registerMainMenuItem({ label: "🖼️ Portfolio", data: "portfolio:gallery", order: 20 });
 
-const composer = new Composer();
+const composer = new Composer<Ctx>();
 
 composer.callbackQuery("portfolio:gallery", async (ctx) => {
   await ctx.answerCallbackQuery();
-  await ctx.reply("View curated portfolio images with captions");
+  const store = getStore();
+  const items = await store.getPortfolioItems();
+
+  if (items.length === 0) {
+    await ctx.reply("Portfolio coming soon — stay tuned.", {
+      reply_markup: inlineKeyboard([[inlineButton("⬅️ Back to menu", "menu:main")]]),
+    });
+    return;
+  }
+
+  const lines = items.map((item) => {
+    const tags = item.tags.length > 0 ? ` [${item.tags.join(", ")}]` : "";
+    return `• ${item.caption}${tags}`;
+  });
+
+  await ctx.reply(lines.join("\n\n"), {
+    reply_markup: inlineKeyboard([[inlineButton("⬅️ Back to menu", "menu:main")]]),
+  });
 });
 
 export default composer;

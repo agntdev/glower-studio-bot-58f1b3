@@ -1,14 +1,14 @@
 [
   {
-    "name": "Make Booking",
+    "name": "Leave a review - no completed bookings",
     "steps": [
       {
-        "send": { "callback": "booking:start" },
+        "send": { "callback": "review:start" },
         "expect": [
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Which service would you like to book?"
+              "text": "No completed bookings to review yet."
             }
           }
         ]

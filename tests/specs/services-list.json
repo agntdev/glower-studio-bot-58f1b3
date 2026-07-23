@@ -3,17 +3,15 @@
     "name": "View Services",
     "steps": [
       {
+        "send": { "callback": "services:list" },
         "expect": [
           {
             "method": "sendMessage",
             "payload": {
-              "text": "Browse available beauty services with photos and details"
+              "text": "• Manicure & Nail Art — $45 (60 min)\n  Classic or gel manicure with nail art options.\n\n• Deep Cleansing Facial — $80 (75 min)\n  Deep cleansing facial with moisturising mask.\n\n• Hair Styling — $65 (90 min)\n  Cut, blow-dry, and style for any occasion.\n\n• Eyebrow Shaping — $25 (30 min)\n  Precision eyebrow shaping and tinting."
             }
           }
-        ],
-        "send": {
-          "callback": "services:list"
-        }
+        ]
       }
     ]
   }
