@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Read Reviews",
+    "steps": [
+      {
+        "expect": [
+          {
+            "method": "sendMessage",
+            "payload": {
+              "text": "Browse client reviews with photos and admin replies"
+            }
+          }
+        ],
+        "send": {
+          "callback": "reviews:list"
+        }
+      }
+    ]
+  }
+]
