@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Portfolio Gallery",
+    "steps": [
+      {
+        "expect": [
+          {
+            "method": "sendMessage",
+            "payload": {
+              "text": "View curated portfolio images with captions"
+            }
+          }
+        ],
+        "send": {
+          "callback": "portfolio:gallery"
+        }
+      }
+    ]
+  }
+]
