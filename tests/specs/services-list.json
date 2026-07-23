@@ -1,0 +1,20 @@
+[
+  {
+    "name": "View Services",
+    "steps": [
+      {
+        "expect": [
+          {
+            "method": "sendMessage",
+            "payload": {
+              "text": "Browse available beauty services with photos and details"
+            }
+          }
+        ],
+        "send": {
+          "callback": "services:list"
+        }
+      }
+    ]
+  }
+]
